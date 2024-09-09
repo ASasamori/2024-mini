@@ -75,7 +75,7 @@ C5 = 523.25
 
 Then we created an array with the notes the duration and the correct order the notes shoud be played:
 
-```txt
+```python
 happy_birthday = [
     (C4, 1), (C4, 1), (D4, 1), (C4, 1), (F4, 1), (E4, 2),
     (C4, 1), (C4, 1), (D4, 1), (C4, 1), (G4, 1), (F4, 2),
@@ -89,5 +89,22 @@ Then we wrote a loop for the notes to be played.
 ## Exrcise 3: Game
 
 1. Edit the exercise_game.py code to compute average, minimum, maximum response time for 10 flashes total.
+
+The follwing code was added to compute the average, minimum, maximum and the score:
+
+``` python 
+    data = {
+        "The average response time is": sum(t_good) / len(t_good),
+        "The minimum response time is": min(t_good),
+        "The maximum response time is": max(t_good),
+        "The final score is": 1 - misses / len(t),
+    }
+```
+We also changed the variable N from 3 to 10, since we need 10 flashes;
+
+
+```python
+N: int = 10  
+```
 
 2. Upload the response time data to a cloud service of your choice.
