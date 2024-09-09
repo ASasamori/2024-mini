@@ -8,7 +8,7 @@ import random
 import json
 
 
-N: int = 10
+N: int = 10  ##changed from 3 to 10, because question wants 10 flashes
 sample_ms = 10.0
 on_ms = 500
 
@@ -57,7 +57,14 @@ def scorer(t: list[int | None]) -> None:
     # add key, value to this dict to store the minimum, maximum, average response time
     # and score (non-misses / total flashes) i.e. the score a floating point number
     # is in range [0..1]
-    data = {}
+    
+    data = {
+        "The average response time is": sum(t_good) / len(t_good),
+        "The minimum response time is": min(t_good),
+        "The maximum response time is": max(t_good),
+        "The final score is": 1 - misses / len(t),
+    }
+
 
     # %% make dynamic filename and write JSON
 
