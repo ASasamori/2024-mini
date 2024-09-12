@@ -18,12 +18,3 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'  # Ensure the right Python version is installed
-
-      - name: List files in the repository  # Optional for debugging
-        run: ls -R
-
-      - name: Run Python Script
-        env:
-          FIREBASE_OAUTH_TOKEN: ${{ secrets.FIREBASE_OAUTH_TOKEN }}
-        run: |
-          python assignment/exercise_game.py 
