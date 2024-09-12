@@ -13,8 +13,8 @@ def index():
         docs = db.collection('responses').stream()
         responses = [doc.to_dict() for doc in docs]
         
-        # Debugging: Print the responses to console
-        print("Retrieved responses:", responses)
+        # Sort responses by timestamp; most recent games appended to top
+        responses.sort(key=lambda x: x['timestamp'], reverse=True)
         
         return render_template('index.html', responses=responses)
     except Exception as e:
