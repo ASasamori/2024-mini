@@ -23,4 +23,4 @@ jobs:
         env:
           FIREBASE_OAUTH_TOKEN: ${{ secrets.FIREBASE_OAUTH_TOKEN }}
         run: |
-          python exercise_game.py 
+          python /assignment/exercise_game.py 
