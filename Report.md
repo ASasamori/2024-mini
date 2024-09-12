@@ -4,8 +4,9 @@
 
 1. what are the "max_bright" and "min_bright" values you found?
 
-1. `max_bright` value that corresponded to LED duty cycle of about 100% was found at **43000**
-   `min_bright` value that corresponded to LED duty cycle of about 0% was found at **19000**
+`max_bright` value that corresponded to LED duty cycle of about 100% was found at ~**43000**
+
+`min_bright` value that corresponded to LED duty cycle of about 0% was found at ~**19000**
 
 #### Example output of first few values
 
@@ -92,19 +93,97 @@ Then we wrote a loop for the notes to be played.
 
 The follwing code was added to compute the average, minimum, maximum and the score:
 
-``` python 
+```python
     data = {
-        "The average response time is": sum(t_good) / len(t_good),
-        "The minimum response time is": min(t_good),
-        "The maximum response time is": max(t_good),
-        "The final score is": 1 - misses / len(t),
+        "avg_resp_time": sum(t_good) / len(t_good),
+        "min_resp_time": min(t_good),
+        "max_resp_time": max(t_good),
+        "score": 1 - misses / len(t)
     }
 ```
+
 We also changed the variable N from 3 to 10, since we need 10 flashes;
 
-
 ```python
-N: int = 10  
+N: int = 10
 ```
 
 2. Upload the response time data to a cloud service of your choice.
+
+First, needed to make sure that the Pico connected to the internet fine. Did so with the following script.
+
+```python
+import time
+import network
+
+def connect_to_internet(ssid, password):
+    # Pass in string arguments for ssid and password
+
+    # Just making our internet connection
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    wlan.connect(ssid, password)
+
+    # Wait for connect or fail
+    max_wait = 10
+    while max_wait > 0:
+      if wlan.status() < 0 or wlan.status() >= 3:
+        break
+      max_wait -= 1
+      print('waiting for connection...')
+      time.sleep(1)
+    # Handle connection error
+    if wlan.status() != 3:
+       raise RuntimeError('network connection failed')
+    else:
+      print('connected')
+      status = wlan.ifconfig()
+
+connect_to_internet('<sample_internet_name>', '<sample_internet_password>')
+```
+
+Source: https://github.com/shillehbean/youtube-channel/blob/main/internet_connection_pico_w.py
+
+Needed to create a Firebase project and connect through the Firebase console webpage. Since this project is not a webpage, there is no Web API Key associated with it.
+
+![alt text](images/web_api_key.png)
+
+Instead, the Raspberry Pi Pico can connect to the Firestore Database through an OAuth Token.
+
+You can do so by going to Project Settings -> Service Accounts -> Python -> Generate New Private Key
+
+This will result in a JSON file that contains the key, but you will need to extract it. In order to do that, need to run the following script. (Need to install the following google dependencies before so.)
+
+```sh
+pip install google-auth google-auth-oauthlib google-auth-httplib2
+```
+
+```python
+import google.auth
+from google.auth.transport.requests import Request
+from google.oauth2 import service_account
+
+# Load the service account credentials from JSON file
+SERVICE_ACCOUNT_FILE = '/Users/andrew/Desktop/new_key.json'
+
+# Specify the correct scope for Firestore
+SCOPES = ['https://www.googleapis.com/auth/datastore']
+
+# Create credentials object with the Firestore scope
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
+# Refresh the token to get a new OAuth 2.0 access token
+credentials.refresh(Request())
+
+# Get the OAuth 2.0 token
+token = credentials.token
+
+print("OAuth 2.0 Token:", token)
+```
+
+Retrieve this OAuth token, and then append the token to the exercise_game.py file.
+
+After running and playing the exercise_game, the DB has been stored as intended:
+
+![alt text](images/firestore_database.png)
