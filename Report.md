@@ -144,7 +144,7 @@ connect_to_internet('<sample_internet_name>', '<sample_internet_password>')
 
 Source: https://github.com/shillehbean/youtube-channel/blob/main/internet_connection_pico_w.py
 
-Needed to create a Firebase project and connect through the Firebase console webpage. Since this project is not a webpage, there is no Web API Key associated with it.
+Needed to create a Firebase project and connect through the Firebase console webpage. Since this project is not a Firebase Web App/Firebase Web API, there is no Web API Key associated with it.
 
 ![alt text](images/web_api_key.png)
 
@@ -187,3 +187,50 @@ Retrieve this OAuth token, and then append the token to the exercise_game.py fil
 After running and playing the exercise_game, the DB has been stored as intended:
 
 ![alt text](images/firestore_database.png)
+
+Now need to display this information to a webpage.
+
+Firebase and Google Cloud share the same project information, so can easily share the project over. To link to Google Cloud (in Firebase), go to Project Settings -> Service Accounts -> All Service Accounts.
+
+Needed to initially create a new service account to gain access to the database. Give this user permission to edit, as well as create keys on local computer.
+
+![alt text](images/gc_permissions.png)
+
+After doing that, create key to local computer. Need to then create a local environment for `GOOGLE_APPLICATION_CREDENTIALS`. Can do so by:
+
+```sh
+export GOOGLE_APPLICATION_CREDENTIALS="/path_to_your/service-account-file.json"
+```
+
+Verify this by doing:
+
+```sh
+echo $GOOGLE_APPLICATION_CREDENTIALS
+```
+
+Now verify that the Google Cloud can connect to your Firebase account (sample script):
+
+```python
+from google.cloud import firestore
+
+def main():
+    # Initialize Firestore
+    db = firestore.Client()
+
+    # Query Firestore data
+    try:
+        docs = db.collection('name_of_firebase_collection').get()
+        for doc in docs:
+            print(doc.to_dict())
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
+```
+
+When successful, created dummy Flask website via python script and HTML document. Site was ran locally and received the following:
+
+![alt text](images/response_data_website.png)
+
+_Note: This timestamp correlates to the Firestore Database image from before, since Firebase records in timezone of UTC-4_
