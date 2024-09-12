@@ -229,7 +229,13 @@ if __name__ == "__main__":
     main()
 ```
 
-When successful, created dummy Flask website via python script and HTML document. Site was ran locally and received the following:
+When successful, created dummy Flask website via python script and HTML document. To install Flask run the following script:
+
+```sh
+pip install Flask google-cloud-firestore
+```
+
+Site was ran locally and received the following:
 
 ![alt text](images/response_data_website.png)
 
