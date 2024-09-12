@@ -240,3 +240,7 @@ Site was ran locally and received the following:
 ![alt text](images/response_data_website.png)
 
 _Note: This timestamp correlates to the Firestore Database image from before, since Firebase records in timezone of UTC-4_
+
+Working Demo of Cloud Portion:
+
+<video controls src="images/cloud_demo.mp4" title=""></video>
