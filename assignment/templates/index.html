@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firestore Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Response Data from Firestore</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Average Response Time</th>
+                <th>Maximum Response Time</th>
+                <th>Minimum Response Time</th>
+                <th>Score</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for response in responses %}
+            <tr>
+                <td>{{ response.avg_resp_time }}</td>
+                <td>{{ response.max_resp_time }}</td>
+                <td>{{ response.min_resp_time }}</td>
+                <td>{{ response.score }}</td>
+                <td>{{ response.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
