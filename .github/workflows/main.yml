@@ -19,12 +19,8 @@ jobs:
         with:
           python-version: '3.x'  # Ensure the right Python version is installed
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt  # Install dependencies if you have any
-
       - name: Run Python Script
         env:
-          FIREBASE_OAUTH_TOKEN: ${{ secrets.FIREBASE_OAUTH_TOKEN }}  # Use the secret
+          FIREBASE_OAUTH_TOKEN: ${{ secrets.FIREBASE_OAUTH_TOKEN }}
         run: |
-          python your_script.py  # Replace this with your script filename
+          python exercise_game.py 
