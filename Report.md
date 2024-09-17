@@ -56,7 +56,7 @@
 42426
 ```
 
-## Exrcise 2: Sound
+## Exercise 2: Sound
 
 1. Using the code in exercise_sound.py as a starting point, modify the code to play several notes in a sequence from a song of your choosing.
 
@@ -83,11 +83,17 @@ happy_birthday = [
     (C4, 1), (C4, 1), (C5, 1), (A4, 1), (F4, 1), (E4, 1), (D4, 2),
     (B4, 1), (B4, 1), (A4, 1), (F4, 1), (G4, 1), (F4, 2)
 ]
+
+for note, duration in happy_birthday:
+    print(f"Playing frequency (Hz): {note:.2f} ")
+    playtone(note, duration)
+    quiet()
+    utime.sleep(0.1)
 ```
 
 Then we wrote a loop for the notes to be played.
 
-## Exrcise 3: Game
+## Exercise 3: Game
 
 1. Edit the exercise_game.py code to compute average, minimum, maximum response time for 10 flashes total.
 
